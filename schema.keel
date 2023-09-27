@@ -18,6 +18,21 @@ model Building {
         code Text?
         note Text?
     }
+
+    actions {
+        get getBuilding(id)
+        list listBuilding()
+        delete deleteBuilding(id)
+        create createBuilding() with (street, number, doors, code?, note?) {
+            @permission(expression: ctx.isAuthenticated)
+        }
+        update updateBuilding(id) with (doors?, code?, note?)
+    }
+
+    @permission(
+        actions: [get, list, update, delete],
+        expression: ctx.isAuthenticated
+    )
 }
 
 model Spot {
@@ -27,9 +42,25 @@ model Spot {
         door Number?
         active Boolean @default(false)
         note Text?
-        host User
+        host User?
         report Report[]
     }
+
+    actions {
+        get getSpot(id)
+        list listSpot()
+        delete deleteSpot(id)
+        create createSpot() with (building.id, floor?, door?, active, note?, host.id?) {
+            @permission(expression: ctx.isAuthenticated)
+            // @set(spot.host.id = host.id ? host.id : ctx.identity.id)
+        }
+        update updateSpot(id) with (active?, note?)
+    }
+
+    @permission(
+        actions: [get, list, update, delete],
+        expression: ctx.isAuthenticated
+    )
 }
 
 model User {
