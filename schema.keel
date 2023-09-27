@@ -1,6 +1,13 @@
 enum DoorType {
     Numbered
     Direction
+    House
+}
+
+enum ReportType {
+    Closed
+    Abusive
+    Mistake
 }
 
 model Building {
@@ -8,26 +15,54 @@ model Building {
         street Text
         number Number
         doors DoorType
-        code Text
+        code Text?
+        note Text?
     }
 }
 
 model Location {
     fields {
         building Building
-        floor Number
-        door Number
-        active Boolean
+        floor Number?
+        door Number?
+        active Boolean @default(false)
+        note Text?
+        host User
+        report Report[]
+    }
+}
+
+model Report {
+    fields {
+        reporter User
+        target Location
         note Text
+        type ReportType
     }
 }
 
 model User {
     fields {
         identity Identity
-        house Location
-        group Number
+        house Location?
+        group Number @default(2)
     }
 }
 
-model 
+model Message {
+    fields {
+        note Text
+        sender User
+        target Location?
+        recieve User
+        location Building
+    }
+}
+
+model Announce {
+    fields {
+        note Text
+        post Timestamp?
+        location Building
+    }
+}
