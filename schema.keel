@@ -1,0 +1,33 @@
+enum DoorType {
+    Numbered
+    Direction
+}
+
+model Building {
+    fields {
+        street Text
+        number Number
+        doors DoorType
+        code Text
+    }
+}
+
+model Location {
+    fields {
+        building Building
+        floor Number
+        door Number
+        active Boolean
+        note Text
+    }
+}
+
+model User {
+    fields {
+        identity Identity
+        house Location
+        group Number
+    }
+}
+
+model 
