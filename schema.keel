@@ -20,7 +20,7 @@ model Building {
     }
 }
 
-model Location {
+model Spot {
     fields {
         building Building
         floor Number?
@@ -32,20 +32,19 @@ model Location {
     }
 }
 
-model Report {
-    fields {
-        reporter User
-        target Location
-        note Text
-        type ReportType
-    }
-}
-
 model User {
     fields {
         identity Identity
-        house Location?
         group Number @default(2)
+    }
+}
+
+model Report {
+    fields {
+        reporter User
+        target Spot
+        note Text
+        type ReportType
     }
 }
 
@@ -53,9 +52,9 @@ model Message {
     fields {
         note Text
         sender User
-        target Location?
+        target Spot?
         recieve User
-        location Building
+        spot Building
     }
 }
 
@@ -63,6 +62,6 @@ model Announce {
     fields {
         note Text
         post Timestamp?
-        location Building
+        spot Building
     }
 }
