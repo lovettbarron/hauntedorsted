@@ -10,6 +10,20 @@ enum ReportType {
     Mistake
 }
 
+role Admin {
+    emails {
+        "andrew@keel.xyz"
+    }
+}
+
+job AddBuildingByKommuneKode {
+    inputs {
+        kommunekode Number
+    }
+
+    @permission(roles: [Admin])
+}
+
 model Building {
     fields {
         street Text
@@ -27,6 +41,10 @@ model Building {
             @permission(expression: ctx.isAuthenticated)
         }
         update updateBuilding(id) with (doors?, code?, note?)
+        // create generateFromCsv() with (street, number, doors, code?, note?) {
+        //     @permission(expression: ctx.isAuthenticated)
+        //     @function
+        // }
     }
 
     @permission(
