@@ -49,7 +49,7 @@ export default AddBuildingByKommuneKode(async (ctx, inputs) => {
             })  
 
             for (const address in rec) {
-                models.building.create(address)
+                models.building.create(<any>address)
             }
         }
 });
