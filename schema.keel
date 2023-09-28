@@ -28,6 +28,7 @@ model Building {
     fields {
         street Text
         number Number
+        post Number
         doors DoorType
         code Text?
         note Text?
@@ -37,7 +38,7 @@ model Building {
         get getBuilding(id)
         list listBuilding()
         delete deleteBuilding(id)
-        create createBuilding() with (street, number, doors, code?, note?) {
+        create createBuilding() with (street, number, doors, code?, post, note?) {
             @permission(expression: ctx.isAuthenticated)
         }
         update updateBuilding(id) with (doors?, code?, note?)
